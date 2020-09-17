@@ -1,0 +1,11 @@
+---
+title: "Russia Strong"
+author: "Daniel Shapiro"
+date: "9/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
