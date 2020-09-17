@@ -7,12 +7,31 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+options(scipen = 999)
 library(tidyverse)
 library(readxl)
 library(gt)
 ```
 
-```{r}
+```{r read}
+strength <- read_xlsx("raw-data/strong.xlsx") %>% select(-c(`Pct Change`, Country))
+strength$Value <- round(strength$Value, digits = 2)
+strength$Value <- prettyNum(strength$Value, big.mark = ",")
 
+nat_pwr <- read_xlsx("raw-data/national_power.xlsx")
+```
+
+```{r table_setup}
+strength <- pivot_wider(strength, names_from = Year, values_from = Value) %>%
+  mutate(`Pct Change` = c(-0.07/100, 1.34/100, 4.49/100, -1.13/100, -1.55/100, 0.94/100, -0.43/100, -0.54/100, -4.49/100, -0.97/100, -0.59/100, -0.77/100
+))
+```
+
+```{r gtstrength}
+gt <- gt(strength)
+
+gt <- gt %>% fmt_percent(columns = vars(`Pct Change`))
+
+gt
 ```
 
